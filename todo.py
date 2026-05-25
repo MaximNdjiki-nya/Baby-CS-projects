@@ -1,6 +1,7 @@
 """a simple to do list"""
 import typing
 import json
+from pathlib import Path
 
 def show_menu() -> None:
     """ Prints out menu options for to do list"""
@@ -49,6 +50,17 @@ def todo_save(task_list: list[dict[str, typing.Any]])-> None:
     """saves tasks as a json file"""
     with open("task_list.json", "w", encoding="utf-8") as f:
         json.dump(task_list, f)
+
+def todo_load() -> list[dict[str, typing.Any]]:
+    "loads the to do list when the app is opened"
+    file_path = Path("tasks.json")
+    if file_path.is_file():
+        with open("tasks.json", "r", encoding="utf-8") as f:
+            data: list[dict[str, typing.Any]] = json.load(f)
+        return data
+    else:
+        return []
+
 
 def main()-> None:
     "Demonstrates the logic for to do list and calls functuions"
